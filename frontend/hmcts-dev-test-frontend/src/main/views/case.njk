@@ -1,0 +1,45 @@
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% extends "template.njk" %}
+
+{% block content %}
+  {{ govukBackLink({ text: "Back to all cases", href: "/cases" }) }}
+
+  <h1 class="govuk-heading-xl">Case Details</h1>
+
+  {% if error %}
+    {{ govukNotificationBanner({
+      type: "problem",
+      html: "<p class=\"govuk-body\">" + error + "</p>"
+    }) }}
+  {% elif case %}
+    {{ govukSummaryList({
+      rows: [
+        {
+          key: { text: "ID" },
+          value: { text: case.id }
+        },
+        {
+          key: { text: "Title" },
+          value: { text: case.title }
+        },
+        {
+          key: { text: "Description" },
+          value: { text: case.description }
+        },
+        {
+          key: { text: "Status" },
+          value: { text: case.status }
+        },
+        {
+          key: { text: "Due Date" },
+          value: { text: case.dueDate }
+        }
+      ]
+    }) }}
+    {{ govukButton({ text: "Update status", href: "/cases/" + case.id + "/status", classes: "govuk-button--secondary" }) }}
+  {% endif %}
+{% endblock %}

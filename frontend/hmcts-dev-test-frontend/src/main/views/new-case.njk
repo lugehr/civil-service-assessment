@@ -1,0 +1,58 @@
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/textarea/macro.njk" import govukTextarea %}
+{% from "govuk/components/select/macro.njk" import govukSelect %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+
+{% extends "template.njk" %}
+
+{% block content %}
+  {{ govukBackLink({ text: "Back to all cases", href: "/cases" }) }}
+
+  <h1 class="govuk-heading-xl">Create new case</h1>
+
+  {% if error %}
+    {{ govukNotificationBanner({
+      type: "problem",
+      html: "<p class=\"govuk-body\">" + error + "</p>"
+    }) }}
+  {% endif %}
+
+  <form method="post" action="/cases">
+    {{ govukInput({
+      label: { text: "Title", classes: "govuk-label--m" },
+      id: "title",
+      name: "title",
+      value: values.title if values
+    }) }}
+
+    {{ govukTextarea({
+      label: { text: "Description", classes: "govuk-label--m" },
+      id: "description",
+      name: "description",
+      value: values.description if values
+    }) }}
+
+    {{ govukSelect({
+      label: { text: "Status", classes: "govuk-label--m" },
+      id: "status",
+      name: "status",
+      items: [
+        { value: "OPEN", text: "Open", selected: values.status === "OPEN" if values },
+        { value: "IN_PROGRESS", text: "In Progress", selected: values.status === "IN_PROGRESS" if values },
+        { value: "CLOSED", text: "Closed", selected: values.status === "CLOSED" if values }
+      ]
+    }) }}
+
+    {{ govukInput({
+      label: { text: "Due Date", classes: "govuk-label--m" },
+      id: "dueDate",
+      name: "dueDate",
+      type: "date",
+      value: values.dueDate if values
+    }) }}
+
+    {{ govukButton({ text: "Create case" }) }}
+  </form>
+{% endblock %}

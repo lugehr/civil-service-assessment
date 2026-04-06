@@ -1,0 +1,39 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Application",
+            "request": "launch",
+            "mainClass": "uk.gov.hmcts.reform.dev.Application",
+            "projectName": "hmcts-dev-test-backend"
+        },
+        {
+            "type": "java",
+            "name": "Run Spring Boot Backend",
+            "request": "launch",
+            "mainClass": "uk.gov.hmcts.reform.dev.Application",
+            "projectName": "hmcts-dev-test-backend",
+            "args": "--spring.profiles.active=dev"
+        },
+        {
+            "type": "node",
+            "name": "Run Functional Tests (Gradle)",
+            "request": "launch",
+            "runtimeExecutable": "cmd",
+            "args": ["/c", "gradlew.bat functional"],
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal"
+        }
+    ]
+}

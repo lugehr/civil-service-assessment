@@ -1,0 +1,57 @@
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+
+{% extends "template.njk" %}
+
+{% block content %}
+  <h1 class="govuk-heading-xl">Cases</h1>
+
+  {{ govukButton({ text: "Create new case", href: "/cases/new" }) }}
+
+  <form method="get" action="/cases/search">
+    {{ govukInput({
+      label: { text: "Find case by ID", classes: "govuk-label--s" },
+      id: "id",
+      name: "id",
+      classes: "govuk-input--width-10"
+    }) }}
+    {{ govukButton({ text: "Search", classes: "govuk-button--secondary" }) }}
+  </form>
+
+  {% if error %}
+    {{ govukNotificationBanner({
+      type: "problem",
+      html: "<p class=\"govuk-body\">" + error + "</p>"
+    }) }}
+  {% endif %}
+
+  {% if cases.length %}
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header">ID</th>
+          <th class="govuk-table__header">Title</th>
+          <th class="govuk-table__header">Description</th>
+          <th class="govuk-table__header">Status</th>
+          <th class="govuk-table__header">Due Date</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        {% for c in cases %}
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+              <a href="/cases/{{ c.id }}" class="govuk-link">{{ c.id }}</a>
+            </td>
+            <td class="govuk-table__cell">{{ c.title }}</td>
+            <td class="govuk-table__cell">{{ c.description }}</td>
+            <td class="govuk-table__cell">{{ c.status }}</td>
+            <td class="govuk-table__cell">{{ c.dueDate }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p class="govuk-body">No cases found.</p>
+  {% endif %}
+{% endblock %}

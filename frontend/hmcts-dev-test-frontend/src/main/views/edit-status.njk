@@ -1,0 +1,37 @@
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+
+{% extends "template.njk" %}
+
+{% block content %}
+  {{ govukBackLink({ text: "Back to case", href: "/cases/" + case.id }) }}
+
+  <h1 class="govuk-heading-xl">Update case status</h1>
+
+  {% if error %}
+    {{ govukNotificationBanner({
+      type: "problem",
+      html: "<p class=\"govuk-body\">" + error + "</p>"
+    }) }}
+  {% endif %}
+
+  {% if case %}
+    <form method="post" action="/cases/{{ case.id }}/status">
+      {{ govukRadios({
+        name: "status",
+        fieldset: {
+          legend: { text: "Select a new status", classes: "govuk-fieldset__legend--m" }
+        },
+        items: [
+          { value: "OPEN", text: "Open", checked: case.status === "OPEN" },
+          { value: "IN_PROGRESS", text: "In Progress", checked: case.status === "IN_PROGRESS" },
+          { value: "CLOSED", text: "Closed", checked: case.status === "CLOSED" }
+        ]
+      }) }}
+
+      {{ govukButton({ text: "Update status" }) }}
+    </form>
+  {% endif %}
+{% endblock %}
