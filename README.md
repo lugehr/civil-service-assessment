@@ -1,6 +1,12 @@
 # civil-service-assessment
 Technical Assessment for Civil Service Application
 
+## Run instructions
+
+To run the backend Spring Boot server, navigate to the directory `/backend/hmcts-dev-test-backend` and run `./gradlew bootRun`.
+
+To run the frontend node application navigate to the directory `/frontend/hmcts-dev-test-frontend` and run `yarn start`.
+
 ## API Reference
 
 Base URL: `http://localhost:4000`
