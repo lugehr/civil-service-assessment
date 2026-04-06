@@ -22,7 +22,7 @@ import uk.gov.hmcts.reform.dev.services.CaseService;
 
 @RestController
 @RequestMapping("/cases")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3100")
 public class CaseController {
     private final CaseService service;
 
